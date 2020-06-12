@@ -1,0 +1,85 @@
+<html>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    var num = 1
+    const app = document.getElementById('app')
+    function count() {
+      app.innerHTML = num++
+    }
+    // app.onmousemove = count
+
+    // 添加防抖
+    function debounce(fn, wait, immediate) {
+      /*存储闭包变量timeout来记录定时器*/
+      let timeout = null
+      return function () {
+        let _this = this
+        let args = arguments
+        // 如果有定时器，则需要清除,需要注意的是clearTimeout并不等于timeout === null
+        if (timeout) {
+          console.log('清除定时器')
+          clearTimeout(timeout)
+        }
+        if (immediate) {
+          // 立即执行表示是第一次，此时肯定没有设置过定时器timeout,此时timeout为初始值null
+          console.log(timeout, 'timeout')
+          let callNow = !timeout
+          timeout = setTimeout(() => {
+            // 如果执行到这个定时器 表示这段防抖完全执行完毕，需要为下一次的防抖做准备
+            timeout = null
+            // 取决于你是否想在一段时间间隔之后 仍然执行
+            fn.apply(_this, args)
+          }, wait)
+          if (callNow) fn.apply(_this, args)
+        } else {
+          timeout = setTimeout(() => {
+            fn.apply(_this, args)
+          }, wait)
+        }
+      }
+    }
+
+    //添加节流
+    // function throttle(fn, wait) {
+    //   let pre = 0
+    //   return function () {
+    //     let _this = this
+    //     let args = arguments
+    //     let now = Date.now()
+    //     if (now - pre >= wait) {
+    //       fn.apply(_this, args)
+    //       pre = Date.now()
+    //     }
+    //   }
+    // }
+    function throttle(fn, wait) {
+      let timeout = null
+      return function () {
+        let _this = this
+        let args = arguments
+        if (!timeout) {
+          console.log(1111)
+          timeout = setTimeout(() => {
+            timeout = null
+            fn.apply(_this, args)
+          }, wait)
+        }
+      }
+    }
+    // app.onmousemove = debounce(count, 500, true)
+    app.onmousemove = throttle(count, 500)
+  </script>
+  <style>
+    #app {
+      height: 500px;
+      width: 100%;
+      background: #ccc;
+      color: #fff;
+      font-size: 30px;
+      text-align: center;
+      line-height: 500px;
+    }
+  </style>
+</html>
