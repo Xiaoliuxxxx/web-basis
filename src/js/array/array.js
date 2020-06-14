@@ -1,5 +1,8 @@
 /**
  * 数组方法总结
+ * 参考文档：https://juejin.im/post/5bb753bd6fb9a05d2272b673
+ * 会改变原数组的方法：
+ * push  pop  unshift shift reverse sort splice copyWith
  */
 
 /**1. Array.push(value),将数据添加到数组的最后，返回改变后数组的长度*/
@@ -104,9 +107,123 @@ console.log(arr15) // [1,2,[3,4],[5]]
 console.log(result15) // [1, 2, 3, 4, 5]
 
 /**16. Array.flatMap()  相当于map和flat的结合 */
-let arr16 = [1, 2, 3, 4, 5]
-let result16 = arr16.flatMap((currentValue) => {
+var arr16 = [1, 2, 3, 4, 5]
+var result16 = arr16.flatMap((currentValue) => {
   return [currentValue, currentValue * 2]
 })
 console.log(result16) // [1, 2, 2, 4, 3, 6, 4, 8, 5, 10]
 console.log(arr16) // [1, 2, 3, 4, 5]
+
+/**17. Array.copyWith(target,start,end) 将数组从start到end索引的元素(不包含end)复制到target开始的索引位置(改变原数组)*/
+var arr17 = [1, 2, 3, 4, 5]
+var result17 = arr17.copyWithin(0, 2, 4)
+console.log(result17) // [3, 4, 3, 4, 5]
+console.log(arr17) // [3, 4, 3, 4, 5]
+
+/**18. Array.entries() 返回一个Array迭代器对象 */
+var arr18 = [1, 2, 3, 4, 5]
+var result18 = arr18.entries()
+console.log(arr18) //[1, 2, 3, 4, 5]
+console.log(result18.next()) //{value:[0,1],done:false}
+
+/**19. Array.keys()返回一个新的Array迭代器对象 */
+var arr19 = [1, 2, 3, 4, 5]
+var result19 = arr19.keys()
+console.log(arr19) //[1, 2, 3, 4, 5]
+console.log(result19.next()) //{value:0,done:false}
+
+/**20. Array.values()返回一个新的迭代器 */
+var arr20 = [1, 2, 3, 4, 5]
+var result20 = arr20.keys()
+console.log(arr20) //[1, 2, 3, 4, 5]
+console.log(result20.next()) //{value:1,done:false}
+
+/**21. Array.forEach()遍历数组，不改变原数组 */
+var arr21 = [1, 2, 3, 4, 5]
+var result21 = arr21.forEach((value, index) => {
+  console.log(value, index)
+  // 1 0
+  // 2 1
+  // 3 2
+  // 4 3
+  // 5 4
+})
+
+var a = []
+for (let i = 0; i < 10000000; i++) {
+  a.push(i)
+}
+var dateStart = Date.now()
+a.forEach((v) => {})
+var dateEnd = Date.now()
+console.log(dateEnd - dateStart) // 运行3次 115ms 117ms  112ms
+
+/**22. Array.every()判断数组中是否所有元素都满足条件 */
+var arr22 = [1, 2, 3, 4, 5]
+var result22 = arr21.every((value) => {
+  return value >= 0
+})
+console.log(arr22) //[1, 2, 3, 4, 5]
+console.log(result22) //true
+
+/**23.Array.filter()返回数组中满足函数条件的集合 */
+var arr23 = [1, 2, 3, 4, 5]
+var result23 = arr23.filter((value) => {
+  return value >= 3
+})
+console.log(arr23) //[1, 2, 3, 4, 5]
+console.log(result23) //[3, 4, 5]
+
+/**24. Array.find()返回数组中满足条件的第一个的值 */
+var arr24 = [1, 2, 3, 4, 5]
+var result24 = arr24.find((value) => {
+  return value >= 3
+})
+console.log(arr24) //[1, 2, 3, 4, 5]
+console.log(result24) //3
+
+/**25. Array.findIndex()返回数组中满足条件第一个值的索引 */
+var arr25 = [1, 2, 3, 4, 5]
+var result25 = arr25.find((value) => {
+  return value >= 3
+})
+console.log(arr25) //[1, 2, 3, 4, 5]
+console.log(result25) //2
+
+/**26. Array.includes()返回一个布尔值，表示数组中是否包含给定值 */
+var arr26 = [1, 2, 3, 4, 5]
+var result26 = arr26.includes(6)
+console.log(arr26) //[1, 2, 3, 4, 5]
+console.log(result26) //false
+
+/**27. Array.map()返回函数返回值组成的新数组 */
+var arr27 = [1, 2, 3, 4, 5]
+var result27 = arr27.map((value) => {
+  return value * 2
+})
+console.log(arr27) //[1, 2, 3, 4, 5]
+console.log(result27) //[2, 4, 6, 8, 10]
+
+/**28.Array.reduce() Array.reduceRight()累技器 */
+var arr28 = [1, 2, 3, 4, 5]
+var result28 = arr28.reduce(
+  //初始值（默认第一个）当前值    当前索引     原数组
+  (accumulator, currentValue, currentIndex, array) => {
+    console.log(accumulator, currentValue, currentIndex, array)
+    return accumulator + currentValue
+  }
+)
+
+/**29.Array.some()只要数组中有满足条件的就返回true */
+var arr29 = [1, 2, 3, 4, 5]
+var result29 = arr29.some((value) => {
+  return value >= 3
+})
+console.log(arr29) //[1, 2, 3, 4, 5]
+console.log(result29) //true
+
+/**30 Array.toLocalString() 将数组中的每个元素使用各自的toLocaleString()转换后用,拼接*/
+var arr30 = [1, undefined, null, new Date(), { m: 1 }]
+var result30 = arr30.toLocaleString()
+console.log(arr30) //[1, undefined, null, new Date(), { m: 1 }]
+console.log(result30) //1,,,2020/6/14 下午10:39:11,[object Object]
