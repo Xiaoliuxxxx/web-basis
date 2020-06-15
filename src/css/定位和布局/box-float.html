@@ -1,0 +1,69 @@
+<html>
+  <body>
+    <div id="IE">IE盒模型</div>
+    <div id="W3C">W3C盒模型</div>
+
+    <div class="container">
+      <div class="child">1</div>
+      <div class="child">2</div>
+      <div class="child">3</div>
+      <div class="child">4</div>
+      <!-- <div class="clear-div"></div> -->
+    </div>
+
+    <div class="brother">不浮动</div>
+  </body>
+  <style type="text/css">
+    #IE {
+      box-sizing: border-box;
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid red;
+      margin: 20px;
+    }
+    #W3C {
+      box-sizing: content-box;
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid red;
+      margin: 20px;
+    }
+    .container {
+      border: 1px dashed red;
+      width: 800px;
+      /* 2.通过设置overflow触发BFC来清除浮动 */
+      /* overflow: hidden; */
+    }
+    /* 3.通过设置after伪元素设置clear清除浮动 */
+    /* .container::after {
+      content: '';
+      height: 0;
+      visibility: hidden;
+      clear: both;
+      display: block;
+    } */
+
+    /* 4.设置before after双伪元素清除 */
+    .container::after,
+    .container::before {
+      display: block;
+      content: '';
+      clear: both;
+    }
+    .child,
+    .brother {
+      width: 100px;
+      height: 100px;
+      border: 1px solid rosybrown;
+    }
+    .child {
+      float: left;
+    }
+    /* 1.清除浮动：添加空元素，设置clear属性 */
+    .clear-div {
+      clear: both;
+    }
+  </style>
+</html>

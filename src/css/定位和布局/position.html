@@ -1,0 +1,57 @@
+<html>
+  <body>
+    <div class="container">
+      <h3 style="height: 100px;">粘性定位sticky</h3>
+      <div class="box5">滚到这就不能再滚了</div>
+      <h3>相对定位relative</h3>
+      <div class="box1"></div>
+      <div class="box2"></div>
+      <h3>绝对定位absolute</h3>
+      <div class="box3">
+        <div class="box4"></div>
+      </div>
+
+      <div class="box6">
+        <h3>固定定位fixed</h3>
+      </div>
+    </div>
+  </body>
+  <style type="text/css">
+    .box1,
+    .box2,
+    .box3,
+    .box4,
+    .box6 {
+      height: 300px;
+      width: 300px;
+      border: 3px solid palegoldenrod;
+    }
+    .box1 {
+      /* 1.relative是相对定位，相对的是标准文档流，不改变原本在文档流中的占位空间 */
+      position: relative;
+      top: 100px;
+      left: 100px;
+    }
+    .box3 {
+      position: relative;
+    }
+    .box4 {
+      /* 4.绝对定位是取最近定位的父元素进行定位，脱离文档流 */
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+    .box5 {
+      /* 2.sticky定位的话相当于,在不滚动的时候正常展示，滚动的时候，滚到一定位置fixed住 */
+      position: sticky;
+      top: 50px;
+      height: 100px;
+    }
+    .box6 {
+      /* 3.fixed定位脱离文档流，相对于浏览器视窗定位 */
+      position: fixed;
+      top: 50px;
+      right: 100px;
+    }
+  </style>
+</html>
